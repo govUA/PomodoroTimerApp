@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     taskListWidget = findChild<QListWidget*>("taskListWidget");
     taskInputField = findChild<QLineEdit*>("taskInputField");
     addTaskButton = findChild<QPushButton*>("addTaskButton");
+    removeTaskButton = findChild<QPushButton*>("removeTaskButton");
     timerLabel = findChild<QLabel*>("timerLabel");
     startButton = findChild<QPushButton*>("startButton");
     pauseButton = findChild<QPushButton*>("pauseButton");
@@ -20,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(pomodoroTimer, &QTimer::timeout, this, &MainWindow::updateTimer);
 
     connect(addTaskButton, &QPushButton::clicked, this, &MainWindow::addTask);
+    connect(removeTaskButton, &QPushButton::clicked, this, &MainWindow::removeTask);
+    connect(taskListWidget, &QListWidget::itemDoubleClicked, this, &MainWindow::removeTaskOnDoubleClick);
     connect(startButton, &QPushButton::clicked, this, &MainWindow::startTimer);
     connect(pauseButton, &QPushButton::clicked, this, &MainWindow::pauseTimer);
     connect(resetButton, &QPushButton::clicked, this, &MainWindow::resetTimer);
@@ -46,6 +49,28 @@ void MainWindow::addTask()
     taskInputField->clear();
 
     qDebug() << "Task added:" << taskText;
+}
+
+void MainWindow::removeTask()
+{
+    QListWidgetItem *selectedItem = taskListWidget->currentItem();
+
+    if (!selectedItem) {
+        qDebug() << "No task selected for removal!";
+        return;
+    }
+
+    delete selectedItem;
+
+    qDebug() << "Task removed.";
+}
+
+void MainWindow::removeTaskOnDoubleClick(QListWidgetItem *item)
+{
+    if (item) {
+        delete item;
+        qDebug() << "Task removed on double-click.";
+    }
 }
 
 void MainWindow::startTimer()

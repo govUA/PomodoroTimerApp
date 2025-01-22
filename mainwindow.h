@@ -28,6 +28,7 @@ private:
     QListWidget *taskListWidget;
     QLineEdit *taskInputField;
     QPushButton *addTaskButton;
+    QPushButton *removeTaskButton;
     QLabel *timerLabel;
     QPushButton *startButton;
     QPushButton *pauseButton;
@@ -38,6 +39,8 @@ private:
 
 private slots:
     void addTask();
+    void removeTask();
+    void removeTaskOnDoubleClick(QListWidgetItem *item);
     void startTimer();
     void pauseTimer();
     void resetTimer();
