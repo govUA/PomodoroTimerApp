@@ -34,7 +34,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::addTask()
 {
-    qDebug() << "Add Task button clicked!";
+    QString taskText = taskInputField->text();
+
+    if (taskText.isEmpty()) {
+        qDebug() << "Task input is empty!";
+        return;
+    }
+
+    taskListWidget->addItem(taskText);
+
+    taskInputField->clear();
+
+    qDebug() << "Task added:" << taskText;
 }
 
 void MainWindow::startTimer()
