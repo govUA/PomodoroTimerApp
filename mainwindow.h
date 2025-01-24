@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,5 +24,26 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    QListWidget *taskListWidget;
+    QLineEdit *taskInputField;
+    QPushButton *addTaskButton;
+    QPushButton *removeTaskButton;
+    QLabel *timerLabel;
+    QPushButton *startButton;
+    QPushButton *pauseButton;
+    QPushButton *resetButton;
+
+    QTimer *pomodoroTimer;
+    int remainingTime;
+
+private slots:
+    void addTask();
+    void removeTask();
+    void removeTaskOnDoubleClick(QListWidgetItem *item);
+    void startTimer();
+    void pauseTimer();
+    void resetTimer();
+    void updateTimer();
 };
 #endif // MAINWINDOW_H
